@@ -3,7 +3,7 @@ import { getAuth, GoogleAuthProvider } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
+  apiKey: "AIzaSyCopDH8dVFV1QDcu-ZWVVLqivAoeTFqH0c",
   authDomain: "winveo.firebaseapp.com",
   projectId: "winveo",
   storageBucket: "winveo.firebasestorage.app",
