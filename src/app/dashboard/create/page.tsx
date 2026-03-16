@@ -102,6 +102,10 @@ export default function CreateVideoPage() {
     );
   }
 
+  const [selectedMusic, setSelectedMusic] = useState('Energetic');
+
+  const musicOptions = ['Energetic', 'Professional', 'Calm', 'Happy', 'Modern'];
+
   return (
     <div className="max-w-4xl mx-auto">
       <div className="mb-8">
@@ -113,14 +117,14 @@ export default function CreateVideoPage() {
         <div className="flex border-b border-gray-200 border-dashed bg-gray-50">
           {[1, 2, 3].map((s) => (
             <div key={s} className={`flex-1 py-4 text-center font-bold text-sm border-r border-gray-200 last:border-0 ${step === s ? 'text-brand-orange bg-white border-b-2 border-b-brand-orange' : 'text-gray-400'}`}>
-              Step {s}
+              {s === 1 ? 'Business' : s === 2 ? 'Media/Voice' : 'Style/Music'}
             </div>
           ))}
         </div>
 
         <form onSubmit={handleGenerate} className="p-4 sm:p-8">
           {step === 1 && (
-            <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4">
+            <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
               <h2 className="text-xl font-bold mb-4">Business Details</h2>
               
               <div className="grid md:grid-cols-2 gap-6">
@@ -170,7 +174,7 @@ export default function CreateVideoPage() {
           )}
 
           {step === 2 && (
-            <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4">
+            <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
               <h2 className="text-xl font-bold mb-4">Video Settings & Media</h2>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-8">
@@ -236,29 +240,69 @@ export default function CreateVideoPage() {
           )}
 
           {step === 3 && (
-            <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4">
-              <h2 className="text-xl font-bold mb-4">Choose a Template</h2>
-              
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                {[1, 2, 3, 4, 5, 6].map((idx) => (
-                  <div 
-                    key={idx} 
-                    onClick={() => setSelectedTemplate(idx)}
-                    className={`relative rounded-2xl overflow-hidden border-2 cursor-pointer transition-all duration-300 group ${selectedTemplate === idx ? 'border-brand-orange bg-brand-orange shadow-lg shadow-brand-orange/20' : 'border-transparent bg-gray-900 shadow-sm hover:shadow-lg'}`}
-                  >
-                    <input type="radio" name="template" className="absolute opacity-0 inset-0 z-20 cursor-pointer" checked={selectedTemplate === idx} onChange={() => {}} />
-                    <img src={`https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&q=80&w=400&h=250&random=${idx}`} alt={`Template ${idx}`} className={`absolute inset-0 w-full h-full object-cover transition duration-500 ${selectedTemplate === idx ? 'opacity-100' : 'opacity-70 group-hover:opacity-100'}`} />
-                    <div className={`absolute inset-0 transition-colors ${selectedTemplate === idx ? 'bg-orange-500/10' : 'bg-black/20 group-hover:bg-black/10'}`}></div>
-                    
-                    <div className="absolute bottom-3 left-4 z-10">
-                      <p className="text-white font-bold text-sm">Theme {idx}</p>
+            <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+              <div>
+                <h2 className="text-xl font-bold mb-4">Select Background Music</h2>
+                <div className="flex flex-wrap gap-2">
+                  {musicOptions.map((music) => (
+                    <button
+                      key={music}
+                      type="button"
+                      onClick={() => setSelectedMusic(music)}
+                      className={`px-6 py-2 rounded-full text-sm font-medium transition ${selectedMusic === music ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/30' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
+                    >
+                      {music}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <h2 className="text-xl font-bold mb-4">Choose a Template</h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                  {[1, 2, 3, 4, 5, 6].map((idx) => (
+                    <div 
+                      key={idx} 
+                      onClick={() => setSelectedTemplate(idx)}
+                      className={`relative rounded-2xl overflow-hidden border-2 cursor-pointer transition-all duration-300 group ${selectedTemplate === idx ? 'border-brand-orange bg-brand-orange shadow-lg shadow-brand-orange/20' : 'border-transparent bg-gray-900 shadow-sm hover:shadow-lg'}`}
+                    >
+                      <input type="radio" name="template" className="absolute opacity-0 inset-0 z-20 cursor-pointer" checked={selectedTemplate === idx} onChange={() => {}} />
+                      <img src={`https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&q=80&w=400&h=250&random=${idx}`} alt={`Template ${idx}`} className={`absolute inset-0 w-full h-full object-cover transition duration-500 ${selectedTemplate === idx ? 'opacity-100' : 'opacity-70 group-hover:opacity-100'}`} />
+                      <div className={`absolute inset-0 transition-colors ${selectedTemplate === idx ? 'bg-orange-500/10' : 'bg-black/20 group-hover:bg-black/10'}`}></div>
+                      
+                      <div className="absolute bottom-3 left-4 z-10">
+                        <p className="text-white font-bold text-sm">Theme {idx}</p>
+                      </div>
+                      
+                      <div className={`absolute top-3 right-3 w-6 h-6 rounded-full border-2 z-10 flex items-center justify-center transition-all duration-300 ${selectedTemplate === idx ? 'bg-white border-white' : 'border-white/50 bg-transparent'}`}>
+                        <CheckCircle2 className={`w-4 h-4 transition-opacity ${selectedTemplate === idx ? 'text-brand-orange opacity-100' : 'text-white opacity-0'}`} />
+                      </div>
                     </div>
-                    
-                    <div className={`absolute top-3 right-3 w-6 h-6 rounded-full border-2 z-10 flex items-center justify-center transition-all duration-300 ${selectedTemplate === idx ? 'bg-white border-white' : 'border-white/50 bg-transparent'}`}>
-                      <CheckCircle2 className={`w-4 h-4 transition-opacity ${selectedTemplate === idx ? 'text-brand-orange opacity-100' : 'text-white opacity-0'}`} />
-                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Summary Section */}
+              <div className="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+                <h3 className="font-bold text-gray-900 mb-4">Review Your Ad</h3>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-sm">
+                  <div>
+                    <p className="text-gray-500">Business</p>
+                    <p className="font-bold">{businessName || 'Not Set'}</p>
                   </div>
-                ))}
+                  <div>
+                    <p className="text-gray-500">Service</p>
+                    <p className="font-bold">{businessType || 'Not Set'}</p>
+                  </div>
+                  <div>
+                    <p className="text-gray-500">Language</p>
+                    <p className="font-bold">{language}</p>
+                  </div>
+                  <div>
+                    <p className="text-gray-500">Music</p>
+                    <p className="font-bold">{selectedMusic}</p>
+                  </div>
+                </div>
               </div>
             </div>
           )}
@@ -294,6 +338,7 @@ export default function CreateVideoPage() {
               </button>
             )}
           </div>
+
         </form>
       </div>
     </div>

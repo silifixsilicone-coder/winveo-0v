@@ -1,9 +1,23 @@
+'use client';
+
 import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Play, Sparkles, Zap, Video as VideoIcon, CheckCircle2, Star } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { auth } from '@/lib/firebase';
+import { onAuthStateChanged, User } from 'firebase/auth';
 
 export default function LandingPage() {
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+    return () => unsubscribe();
+  }, []);
+
   return (
     <div className="min-h-screen bg-white text-gray-900 font-sans">
       <Navbar />
@@ -28,7 +42,7 @@ export default function LandingPage() {
             Generate high-quality video ads for your local business with <span className="text-brand-orange font-bold">winveo.ai</span>. Perfect for plumbers, electricians, sliding window shops and service providers.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <Link href="/signup" className="bg-brand-orange text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-brand-orange-dark transition shadow-xl shadow-brand-orange/30 flex items-center justify-center gap-2">
+            <Link href={user ? "/dashboard/create" : "/signup"} className="bg-brand-orange text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-brand-orange-dark transition shadow-xl shadow-brand-orange/30 flex items-center justify-center gap-2">
               <VideoIcon className="h-5 w-5" />
               Create Your Video
             </Link>
@@ -138,7 +152,7 @@ export default function LandingPage() {
                 ))}
               </ul>
               
-              <Link href="/signup" className="mt-10 inline-block bg-white text-brand-orange px-8 py-4 rounded-full font-bold text-lg hover:bg-orange-50 transition shadow-lg">
+              <Link href={user ? "/dashboard/create" : "/signup"} className="mt-10 inline-block bg-white text-brand-orange px-8 py-4 rounded-full font-bold text-lg hover:bg-orange-50 transition shadow-lg">
                 Start Building Now
               </Link>
             </div>
