@@ -105,6 +105,13 @@ export default function CreateVideoPage() {
     );
   }
 
+  const [selectedStyle, setSelectedStyle] = useState('Modern');
+  const styleOptions = [
+    { id: 'Modern', name: 'Modern', desc: 'Clean & professional' },
+    { id: 'Bold', name: 'Bold', desc: 'High energy & vibrant' },
+    { id: 'Minimal', name: 'Minimal', desc: 'Simple & direct' }
+  ];
+
   return (
     <div className="max-w-4xl mx-auto">
       <div className="mb-8">
@@ -116,6 +123,7 @@ export default function CreateVideoPage() {
         <div className="flex border-b border-gray-200 border-dashed bg-gray-50">
           {[1, 2, 3].map((s) => (
             <div key={s} className={`flex-1 py-4 text-center font-bold text-sm border-r border-gray-200 last:border-0 ${step === s ? 'text-brand-orange bg-white border-b-2 border-b-brand-orange' : 'text-gray-400'}`}>
+              <span className="hidden sm:inline">Step {s}: </span>
               {s === 1 ? 'Business' : s === 2 ? 'Media/Voice' : 'Style/Music'}
             </div>
           ))}
@@ -239,25 +247,62 @@ export default function CreateVideoPage() {
           )}
 
           {step === 3 && (
-            <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-              <div>
-                <h2 className="text-xl font-bold mb-4">Select Background Music</h2>
-                <div className="flex flex-wrap gap-2">
-                  {musicOptions.map((music) => (
-                    <button
-                      key={music}
-                      type="button"
-                      onClick={() => setSelectedMusic(music)}
-                      className={`px-6 py-2 rounded-full text-sm font-medium transition ${selectedMusic === music ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/30' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
-                    >
-                      {music}
-                    </button>
-                  ))}
+            <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-500">
+              <div className="grid md:grid-cols-2 gap-10">
+                {/* Style Selection */}
+                <div>
+                  <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
+                    <div className="w-1.5 h-6 bg-brand-orange rounded-full"></div>
+                    Visual Style
+                  </h2>
+                  <div className="grid gap-3">
+                    {styleOptions.map((opt) => (
+                      <div 
+                        key={opt.id}
+                        onClick={() => setSelectedStyle(opt.id)}
+                        className={`p-4 rounded-2xl border-2 cursor-pointer transition-all ${selectedStyle === opt.id ? 'border-brand-orange bg-orange-50 shadow-sm' : 'border-gray-100 hover:border-gray-200'}`}
+                      >
+                        <div className="flex justify-between items-center mb-1">
+                          <span className={`font-bold ${selectedStyle === opt.id ? 'text-brand-orange' : 'text-gray-900'}`}>{opt.name}</span>
+                          {selectedStyle === opt.id && <CheckCircle2 className="h-5 w-5 text-brand-orange" />}
+                        </div>
+                        <p className="text-xs text-gray-500">{opt.desc}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Music Selection */}
+                <div>
+                  <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
+                    <div className="w-1.5 h-6 bg-brand-orange rounded-full"></div>
+                    Background Music
+                  </h2>
+                  <div className="flex flex-wrap gap-2">
+                    {musicOptions.map((music) => (
+                      <button
+                        key={music}
+                        type="button"
+                        onClick={() => setSelectedMusic(music)}
+                        className={`px-6 py-3 rounded-xl text-sm font-bold transition-all ${selectedMusic === music ? 'bg-brand-orange text-white shadow-lg shadow-brand-orange/30' : 'bg-gray-100 text-gray-600 hover:bg-gray-200 active:scale-95'}`}
+                      >
+                        {music}
+                      </button>
+                    ))}
+                  </div>
+                  <div className="mt-6 p-4 bg-orange-50/50 rounded-2xl border border-orange-100 border-dashed">
+                    <p className="text-[10px] text-brand-orange uppercase font-bold tracking-wider mb-1">Coming Soon</p>
+                    <p className="text-xs text-gray-600 italic">"Full music preview library will be available in the next update."</p>
+                  </div>
                 </div>
               </div>
 
+              {/* Template Selection */}
               <div>
-                <h2 className="text-xl font-bold mb-4">Choose a Template</h2>
+                <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
+                   <div className="w-1.5 h-6 bg-brand-orange rounded-full"></div>
+                   Choose Template
+                </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                   {[1, 2, 3, 4, 5, 6].map((idx) => (
                     <div 
@@ -283,28 +328,33 @@ export default function CreateVideoPage() {
 
               {/* Summary Section */}
               <div className="bg-gray-50 rounded-2xl p-6 border border-gray-100">
-                <h3 className="font-bold text-gray-900 mb-4">Review Your Ad</h3>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-sm">
+                <h3 className="font-bold text-gray-900 mb-4 uppercase text-xs tracking-widest text-gray-400">Order Summary</h3>
+                <div className="grid grid-cols-2 sm:grid-cols-5 gap-4 text-sm">
                   <div>
-                    <p className="text-gray-500">Business</p>
-                    <p className="font-bold">{businessName || 'Not Set'}</p>
+                    <p className="text-gray-500 text-[10px] uppercase font-bold">Business</p>
+                    <p className="font-bold truncate">{businessName || 'Not Set'}</p>
                   </div>
                   <div>
-                    <p className="text-gray-500">Service</p>
+                    <p className="text-gray-500 text-[10px] uppercase font-bold">Service</p>
                     <p className="font-bold">{businessType || 'Not Set'}</p>
                   </div>
                   <div>
-                    <p className="text-gray-500">Language</p>
-                    <p className="font-bold">{language}</p>
+                    <p className="text-gray-500 text-[10px] uppercase font-bold">Style</p>
+                    <p className="font-bold">{selectedStyle}</p>
                   </div>
                   <div>
-                    <p className="text-gray-500">Music</p>
+                    <p className="text-gray-500 text-[10px] uppercase font-bold">Music</p>
                     <p className="font-bold">{selectedMusic}</p>
+                  </div>
+                  <div>
+                    <p className="text-gray-500 text-[10px] uppercase font-bold">Language</p>
+                    <p className="font-bold">{language}</p>
                   </div>
                 </div>
               </div>
             </div>
           )}
+
 
           <div className="mt-8 pt-6 border-t border-gray-100 flex flex-col sm:flex-row justify-between gap-4">
             {step > 1 ? (
