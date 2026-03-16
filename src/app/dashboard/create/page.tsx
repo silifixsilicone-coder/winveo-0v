@@ -127,7 +127,7 @@ export default function CreateVideoPage() {
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Business Type</label>
-                  <select required value={businessType} onChange={(e) => setBusinessType(e.target.value)} className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-brand-orange focus:border-transparent outline-none transition bg-gray-50 focus:bg-white appearance-none">
+                  <select required value={businessType} onChange={(e) => setBusinessType(e.target.value)} className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-brand-orange focus:border-transparent outline-none transition bg-gray-50 focus:bg-white">
                     <option value="" disabled>Select category</option>
                     <option value="Plumber">Plumber</option>
                     <option value="Electrician">Electrician</option>
@@ -228,21 +228,32 @@ export default function CreateVideoPage() {
             </div>
           )}
 
-          <div className="mt-8 pt-6 border-t border-gray-100 flex justify-between">
+          <div className="mt-8 pt-6 border-t border-gray-100 flex flex-col sm:flex-row justify-between gap-4">
             {step > 1 ? (
-              <button type="button" onClick={() => setStep(step - 1)} className="px-6 py-3 rounded-xl font-bold text-gray-600 hover:bg-gray-100 transition">
+              <button 
+                type="button" 
+                onClick={() => setStep(step - 1)} 
+                className="order-2 sm:order-1 px-6 py-4 rounded-xl font-bold text-gray-600 hover:bg-gray-100 transition text-center"
+              >
                 Back
               </button>
             ) : (
-              <div></div>
+              <div className="hidden sm:block"></div>
             )}
             
             {step < 3 ? (
-              <button type="button" onClick={() => setStep(step + 1)} className="bg-gray-900 text-white px-8 py-3 rounded-xl font-bold hover:bg-gray-800 transition shadow-lg shrink-0">
+              <button 
+                type="button" 
+                onClick={() => setStep(step + 1)} 
+                className="order-1 sm:order-2 bg-gray-900 text-white px-10 py-4 rounded-xl font-bold hover:bg-gray-800 transition shadow-lg shrink-0 text-center active:scale-95"
+              >
                 Continue
               </button>
             ) : (
-              <button type="submit" className="bg-brand-orange text-white px-8 py-3 rounded-xl font-bold hover:bg-brand-orange-dark transition shadow-lg shadow-brand-orange/30 shrink-0 flex items-center gap-2">
+              <button 
+                type="submit" 
+                className="order-1 sm:order-2 bg-brand-orange text-white px-10 py-4 rounded-xl font-bold hover:bg-brand-orange-dark transition shadow-lg shadow-brand-orange/30 shrink-0 flex items-center justify-center gap-2 active:scale-95"
+              >
                 <Video className="h-5 w-5" />
                 Generate Video
               </button>
