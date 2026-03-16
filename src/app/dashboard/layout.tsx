@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { 
   Video, 
+  Home,
   LayoutDashboard, 
   PlusCircle, 
   Film, 
@@ -39,6 +40,7 @@ export default function DashboardLayout({
   };
 
   const navigation = [
+    { name: 'Home', href: '/', icon: Home },
     { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
     { name: 'Create Video', href: '/dashboard/create', icon: PlusCircle },
     { name: 'My Videos', href: '/dashboard/videos', icon: Film },
@@ -51,7 +53,7 @@ export default function DashboardLayout({
     <div className="min-h-screen bg-gray-50 flex">
       {/* Mobile menu button */}
       <div className="md:hidden fixed top-0 left-0 w-full bg-white border-b border-gray-200 z-50 px-4 py-3 flex justify-between items-center">
-        <Link href="/dashboard" className="flex items-center gap-2">
+        <Link href="/" className="flex items-center gap-2">
           <div className="bg-brand-orange p-1.5 rounded-lg">
             <Video className="h-5 w-5 text-white" />
           </div>
