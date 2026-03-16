@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { Video, Loader2 } from 'lucide-react';
 import { auth, db, googleProvider } from '@/lib/firebase';

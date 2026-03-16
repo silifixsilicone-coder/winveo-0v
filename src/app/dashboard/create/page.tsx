@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { UploadCloud, Video, Play, CheckCircle2, Loader2, Download, Share2 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -39,6 +39,9 @@ export default function CreateVideoPage() {
       setIsDone(true);
     }, 4000);
   };
+
+  const [selectedMusic, setSelectedMusic] = useState('Energetic');
+  const musicOptions = ['Energetic', 'Professional', 'Calm', 'Happy', 'Modern'];
 
   if (isGenerating) {
     return (
@@ -101,10 +104,6 @@ export default function CreateVideoPage() {
       </div>
     );
   }
-
-  const [selectedMusic, setSelectedMusic] = useState('Energetic');
-
-  const musicOptions = ['Energetic', 'Professional', 'Calm', 'Happy', 'Modern'];
 
   return (
     <div className="max-w-4xl mx-auto">

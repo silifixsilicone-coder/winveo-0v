@@ -10,13 +10,17 @@ import { onAuthStateChanged, User } from 'firebase/auth';
 
 export default function LandingPage() {
   const [user, setUser] = useState<User | null>(null);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
     });
     return () => unsubscribe();
   }, []);
+
+  if (!mounted) return null; // Or a loading skeleton
 
   return (
     <div className="min-h-screen bg-white text-gray-900 font-sans">
