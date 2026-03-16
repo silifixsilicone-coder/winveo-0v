@@ -42,6 +42,12 @@ export default function CreateVideoPage() {
 
   const [selectedMusic, setSelectedMusic] = useState('Energetic');
   const musicOptions = ['Energetic', 'Professional', 'Calm', 'Happy', 'Modern'];
+  const [selectedStyle, setSelectedStyle] = useState('Modern');
+  const styleOptions = [
+    { id: 'Modern', name: 'Modern', desc: 'Clean & professional' },
+    { id: 'Bold', name: 'Bold', desc: 'High energy & vibrant' },
+    { id: 'Minimal', name: 'Minimal', desc: 'Simple & direct' }
+  ];
 
   if (isGenerating) {
     return (
@@ -105,12 +111,6 @@ export default function CreateVideoPage() {
     );
   }
 
-  const [selectedStyle, setSelectedStyle] = useState('Modern');
-  const styleOptions = [
-    { id: 'Modern', name: 'Modern', desc: 'Clean & professional' },
-    { id: 'Bold', name: 'Bold', desc: 'High energy & vibrant' },
-    { id: 'Minimal', name: 'Minimal', desc: 'Simple & direct' }
-  ];
 
   return (
     <div className="max-w-4xl mx-auto">
