@@ -12,11 +12,22 @@ export default function CreateVideoPage() {
   // Form State
   const [businessName, setBusinessName] = useState('');
   const [businessType, setBusinessType] = useState('');
+  const [videoLength, setVideoLength] = useState('10s');
+  const [language, setLanguage] = useState('English');
+  const [voiceType, setVoiceType] = useState('Male');
+  const [selectedTemplate, setSelectedTemplate] = useState(1);
+  const [selectedServices, setSelectedServices] = useState<string[]>([]);
   
   const servicesList = [
     'Glass Railing', 'UPVC Window', 'French Door', 'Aluminium Door', 
     'Sliding Window', 'Pipe Repair', 'Electrical Wiring', 'House Painting'
   ];
+
+  const toggleService = (service: string) => {
+    setSelectedServices(prev => 
+      prev.includes(service) ? prev.filter(s => s !== service) : [...prev, service]
+    );
+  };
 
   const handleGenerate = (e: React.FormEvent) => {
     e.preventDefault();
@@ -143,8 +154,13 @@ export default function CreateVideoPage() {
                 <label className="block text-sm font-medium text-gray-700 mb-3">Select Services Offered</label>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
                   {servicesList.map((service) => (
-                    <label key={service} className="flex items-center gap-2 p-3 border border-gray-200 rounded-xl cursor-pointer hover:bg-gray-50 transition has-[:checked]:bg-orange-50 has-[:checked]:border-orange-200 has-[:checked]:ring-1 has-[:checked]:ring-brand-orange">
-                      <input type="checkbox" className="w-4 h-4 text-brand-orange rounded border-gray-300 focus:ring-brand-orange transition" />
+                    <label key={service} className={`flex items-center gap-2 p-3 border rounded-xl cursor-pointer hover:bg-gray-50 transition ${selectedServices.includes(service) ? 'bg-orange-50 border-brand-orange ring-1 ring-brand-orange' : 'border-gray-200'}`}>
+                      <input 
+                        type="checkbox" 
+                        checked={selectedServices.includes(service)}
+                        onChange={() => toggleService(service)}
+                        className="w-4 h-4 text-brand-orange rounded border-gray-300 focus:ring-brand-orange transition" 
+                      />
                       <span className="text-sm font-medium text-gray-700">{service}</span>
                     </label>
                   ))}
@@ -161,14 +177,21 @@ export default function CreateVideoPage() {
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Video Length</label>
                   <div className="flex bg-gray-100 p-1 rounded-xl">
-                    <button type="button" className="flex-1 py-2 text-sm font-bold bg-white text-gray-900 rounded-lg shadow-sm">10s</button>
-                    <button type="button" className="flex-1 py-2 text-sm font-medium text-gray-500 hover:text-gray-900">20s</button>
-                    <button type="button" className="flex-1 py-2 text-sm font-medium text-gray-500 hover:text-gray-900">30s</button>
+                    {['10s', '20s', '30s'].map((len) => (
+                      <button 
+                        key={len}
+                        type="button" 
+                        onClick={() => setVideoLength(len)}
+                        className={`flex-1 py-2 text-sm font-bold rounded-lg transition-all duration-200 ${videoLength === len ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-900'}`}
+                      >
+                        {len}
+                      </button>
+                    ))}
                   </div>
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Language</label>
-                  <select className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-brand-orange focus:border-transparent outline-none transition bg-gray-50">
+                  <select value={language} onChange={(e) => setLanguage(e.target.value)} className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-brand-orange focus:border-transparent outline-none transition bg-gray-50">
                     <option>English</option>
                     <option>Marathi</option>
                     <option>Hindi</option>
@@ -177,8 +200,16 @@ export default function CreateVideoPage() {
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Voice Type</label>
                   <div className="flex bg-gray-100 p-1 rounded-xl">
-                    <button type="button" className="flex-1 py-2 text-sm font-bold bg-white text-gray-900 rounded-lg shadow-sm">Male</button>
-                    <button type="button" className="flex-1 py-2 text-sm font-medium text-gray-500 hover:text-gray-900">Female</button>
+                    {['Male', 'Female'].map((gender) => (
+                      <button 
+                        key={gender}
+                        type="button" 
+                        onClick={() => setVoiceType(gender)}
+                        className={`flex-1 py-2 text-sm font-bold rounded-lg transition-all duration-200 ${voiceType === gender ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-900'}`}
+                      >
+                        {gender}
+                      </button>
+                    ))}
                   </div>
                 </div>
               </div>
@@ -210,17 +241,21 @@ export default function CreateVideoPage() {
               
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                 {[1, 2, 3, 4, 5, 6].map((idx) => (
-                  <div key={idx} className="relative rounded-2xl overflow-hidden border-2 cursor-pointer transition group border-transparent hover:border-brand-orange focus-within:border-brand-orange bg-gray-900 aspect-video shadow-sm hover:shadow-lg">
-                    <input type="radio" name="template" className="absolute opacity-0 inset-0 z-20 cursor-pointer" defaultChecked={idx === 1} />
-                    <img src={`https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&q=80&w=400&h=250&random=${idx}`} alt={`Template ${idx}`} className="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:opacity-100 transition duration-500" />
-                    <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors"></div>
+                  <div 
+                    key={idx} 
+                    onClick={() => setSelectedTemplate(idx)}
+                    className={`relative rounded-2xl overflow-hidden border-2 cursor-pointer transition-all duration-300 group ${selectedTemplate === idx ? 'border-brand-orange bg-brand-orange shadow-lg shadow-brand-orange/20' : 'border-transparent bg-gray-900 shadow-sm hover:shadow-lg'}`}
+                  >
+                    <input type="radio" name="template" className="absolute opacity-0 inset-0 z-20 cursor-pointer" checked={selectedTemplate === idx} onChange={() => {}} />
+                    <img src={`https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&q=80&w=400&h=250&random=${idx}`} alt={`Template ${idx}`} className={`absolute inset-0 w-full h-full object-cover transition duration-500 ${selectedTemplate === idx ? 'opacity-100' : 'opacity-70 group-hover:opacity-100'}`} />
+                    <div className={`absolute inset-0 transition-colors ${selectedTemplate === idx ? 'bg-orange-500/10' : 'bg-black/20 group-hover:bg-black/10'}`}></div>
                     
                     <div className="absolute bottom-3 left-4 z-10">
                       <p className="text-white font-bold text-sm">Theme {idx}</p>
                     </div>
                     
-                    <div className="absolute top-3 right-3 w-6 h-6 rounded-full border-2 border-white/50 z-10 flex items-center justify-center group-has-[:checked]:bg-brand-orange group-has-[:checked]:border-brand-orange transition-colors">
-                      <CheckCircle2 className="w-4 h-4 text-white opacity-0 group-has-[:checked]:opacity-100 transition-opacity" />
+                    <div className={`absolute top-3 right-3 w-6 h-6 rounded-full border-2 z-10 flex items-center justify-center transition-all duration-300 ${selectedTemplate === idx ? 'bg-white border-white' : 'border-white/50 bg-transparent'}`}>
+                      <CheckCircle2 className={`w-4 h-4 transition-opacity ${selectedTemplate === idx ? 'text-brand-orange opacity-100' : 'text-white opacity-0'}`} />
                     </div>
                   </div>
                 ))}
