@@ -107,7 +107,7 @@ export default function CreateVideoPage() {
           ))}
         </div>
 
-        <form onSubmit={handleGenerate} className="p-8">
+        <form onSubmit={handleGenerate} className="p-4 sm:p-8">
           {step === 1 && (
             <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4">
               <h2 className="text-xl font-bold mb-4">Business Details</h2>
@@ -141,7 +141,7 @@ export default function CreateVideoPage() {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-3">Select Services Offered</label>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
                   {servicesList.map((service) => (
                     <label key={service} className="flex items-center gap-2 p-3 border border-gray-200 rounded-xl cursor-pointer hover:bg-gray-50 transition has-[:checked]:bg-orange-50 has-[:checked]:border-orange-200 has-[:checked]:ring-1 has-[:checked]:ring-brand-orange">
                       <input type="checkbox" className="w-4 h-4 text-brand-orange rounded border-gray-300 focus:ring-brand-orange transition" />
@@ -157,7 +157,7 @@ export default function CreateVideoPage() {
             <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4">
               <h2 className="text-xl font-bold mb-4">Video Settings & Media</h2>
               
-              <div className="grid md:grid-cols-3 gap-6 mb-8">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-8">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Video Length</label>
                   <div className="flex bg-gray-100 p-1 rounded-xl">
@@ -208,19 +208,19 @@ export default function CreateVideoPage() {
             <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4">
               <h2 className="text-xl font-bold mb-4">Choose a Template</h2>
               
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                 {[1, 2, 3, 4, 5, 6].map((idx) => (
-                  <div key={idx} className="relative rounded-xl overflow-hidden border-2 cursor-pointer transition group border-transparent hover:border-orange-400 focus-within:border-brand-orange bg-gray-900 aspect-video">
+                  <div key={idx} className="relative rounded-2xl overflow-hidden border-2 cursor-pointer transition group border-transparent hover:border-brand-orange focus-within:border-brand-orange bg-gray-900 aspect-video shadow-sm hover:shadow-lg">
                     <input type="radio" name="template" className="absolute opacity-0 inset-0 z-20 cursor-pointer" defaultChecked={idx === 1} />
-                    <img src={`https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&q=80&w=400&h=250&random=${idx}`} alt={`Template ${idx}`} className="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:opacity-100 transition" />
-                    <div className="absolute inset-0 bg-black/30"></div>
+                    <img src={`https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&q=80&w=400&h=250&random=${idx}`} alt={`Template ${idx}`} className="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:opacity-100 transition duration-500" />
+                    <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors"></div>
                     
-                    <div className="absolute bottom-2 left-3 z-10">
+                    <div className="absolute bottom-3 left-4 z-10">
                       <p className="text-white font-bold text-sm">Theme {idx}</p>
                     </div>
                     
-                    <div className="absolute top-2 right-2 w-5 h-5 rounded-full border-2 border-white/50 z-10 flex items-center justify-center group-has-[:checked]:bg-brand-orange group-has-[:checked]:border-brand-orange">
-                      <CheckCircle2 className="w-3 h-3 text-white opacity-0 group-has-[:checked]:opacity-100" />
+                    <div className="absolute top-3 right-3 w-6 h-6 rounded-full border-2 border-white/50 z-10 flex items-center justify-center group-has-[:checked]:bg-brand-orange group-has-[:checked]:border-brand-orange transition-colors">
+                      <CheckCircle2 className="w-4 h-4 text-white opacity-0 group-has-[:checked]:opacity-100 transition-opacity" />
                     </div>
                   </div>
                 ))}

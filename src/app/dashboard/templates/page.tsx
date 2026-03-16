@@ -28,25 +28,25 @@ export default function TemplatesPage() {
         ))}
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
         {templates.map((tpl) => (
-          <div key={tpl.id} className="group relative rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:shadow-orange-900/10 border border-gray-100 aspect-[9/16] bg-gray-900 transition-all duration-300">
-            <img src={tpl.img} alt={tpl.title} className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition duration-700" />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover:opacity-90 transition duration-300"></div>
+          <div key={tpl.id} className="group relative rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl hover:shadow-orange-900/10 border border-gray-100 aspect-[9/16] bg-gray-900 transition-all duration-500">
+            <img src={tpl.img} alt={tpl.title} className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-110 transition duration-700" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-90 transition duration-300"></div>
             
-            <div className="absolute inset-0 flex items-center justify-center">
-              <button className="bg-white/90 backdrop-blur-md hover:bg-white w-14 h-14 rounded-full flex items-center justify-center transition shadow-xl scale-75 opacity-0 group-hover:scale-100 group-hover:opacity-100 duration-300">
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <div className="bg-white/90 backdrop-blur-md w-14 h-14 rounded-full flex items-center justify-center transition shadow-xl scale-75 opacity-0 group-hover:scale-100 group-hover:opacity-100 duration-300">
                 <Play className="h-5 w-5 text-brand-orange ml-1" />
-              </button>
+              </div>
             </div>
             
             <div className="absolute top-4 left-4">
-              <span className="bg-white/20 backdrop-blur-md border border-white/30 text-white text-xs font-bold px-3 py-1 rounded-full">{tpl.category}</span>
+              <span className="bg-brand-orange text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow-lg shadow-brand-orange/20">{tpl.category}</span>
             </div>
             
-            <div className="absolute bottom-6 left-6 right-6">
-              <h3 className="text-lg font-bold text-white leading-tight mb-4">{tpl.title}</h3>
-              <Link href="/dashboard/create" className="block w-full text-center bg-brand-orange hover:bg-brand-orange-dark text-white text-sm font-bold py-2.5 rounded-xl transition shadow-lg opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 duration-300">
+            <div className="absolute bottom-5 left-5 right-5">
+              <h3 className="text-lg font-bold text-white leading-tight mb-4 group-hover:mb-2 transition-all duration-300">{tpl.title}</h3>
+              <Link href="/dashboard/create" className="block w-full text-center bg-brand-orange hover:bg-brand-orange-dark text-white text-sm font-bold py-3 rounded-xl transition shadow-lg md:opacity-0 md:translate-y-4 md:group-hover:opacity-100 md:group-hover:translate-y-0 duration-300">
                 Use Template
               </Link>
             </div>
